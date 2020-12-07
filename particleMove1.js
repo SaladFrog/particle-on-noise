@@ -1,20 +1,21 @@
 class Particle {
   constructor(x, y) {
     // this.pos = new Vector(x, y);
-    this.pos = vec(x, y);
-    function vec(x, y) {
-      return {
-        x: x,
-        y: y
-      };
-    }
+    this.pos = { x: x, y: y };
+    // function vec(x, y) {
+    //   return {
+    //     x: x,
+    //     y: y
+    //   };
+    // }
     // this.vel = new Vector(Math.random() * 2 - 1, Math.random() * 2 - 1);
-    this.vel = vec(Math.random() - 0.5, Math.random() - 0.5);
+    // this.vel = vec(Math.random() - 0.5, Math.random() - 0.5);
+    this.vel = { x: Math.random() - 0.5, y: Math.random() - 0.5 };
     // this.acc = new Vector(0, 0);
-    this.acc = vec(0, 0);
+    // this.acc = vec(0, 0);
+    this.acc = { x: 0, y: 0 };
     this.size = 2;
   }
-
   move(acc) {
     if (acc) {
       //this.acc.addTo(acc);
@@ -46,11 +47,9 @@ class Particle {
     this.acc.x = Math.cos(angle) * 0;
     this.acc.y = Math.sin(angle) * 0;
   }
-
-  draw() {
-    ctx.fillRect(this.pos.x, this.pos.y, this.size, this.size);
-  }
-
+  // draw() {
+  //   ctx.fillRect(this.pos.x, this.pos.y, this.size, this.size);
+  // }
   wrap() {
     if (this.pos.x > w) {
       this.pos.x = 0;
@@ -65,15 +64,15 @@ class Particle {
   }
 }
 
-let canvas;
-let ctx;
-let field;
-let w, h;
-let size;
-let columns;
-let rows;
-let noiseZ;
-let particles;
+let canvas, ctx, field, w, h, size, columns, rows, noiseZ, particle;
+// let ctx;
+// let field;
+// let w, h;
+// let size;
+// let columns;
+// let rows;
+// let noiseZ;
+// let particles;
 
 function setup() {
   size = 12;
@@ -137,19 +136,20 @@ function drawBackground(alpha) {
   ctx.fillRect(0, 0, w, h);
 }
 function drawParticles() {
-  let hue = Math.sin(noiseZ) * 30;
+  let hue = Math.sin(noiseZ) * 50;
   ctx.fillStyle = `hsla(${hue}, 50%, 50%, 0.1)`;
   particles.forEach(p => {
     // p.draw();
     ctx.fillRect(p.pos.x, p.pos.y, p.size, p.size);
     // let pos = p.pos.div(size);
-    let pos = divi(p.pos.x, p.pos.y, 15);
-    function divi(x, y, size) {
-      return {
-        x: x / size,
-        y: y / size
-      };
-    }
+    // let pos = divi(p.pos.x, p.pos.y, 15);
+    // function divi(x, y, size) {
+    //   return {
+    //     x: x / size,
+    //     y: y / size
+    //   };
+    // }
+    let pos = { x: p.pos.x / size, y: p.pos.y / size };
     let v;
     if (pos.x >= 0 && pos.x < columns && pos.y >= 0 && pos.y < rows) {
       v = field[Math.floor(pos.x)][Math.floor(pos.y)];
