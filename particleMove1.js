@@ -140,8 +140,8 @@ function drawParticles() {
   let hue = Math.sin(noiseZ) * 30;
   ctx.fillStyle = `hsla(${hue}, 50%, 50%, 0.1)`;
   particles.forEach(p => {
-    p.draw();
-    // ctx.fillRect(p.pos.x, p.pos.y, 2, 2);
+    // p.draw();
+    ctx.fillRect(p.pos.x, p.pos.y, p.size, p.size);
     // let pos = p.pos.div(size);
     let pos = divi(p.pos.x, p.pos.y, 15);
     function divi(x, y, size) {
@@ -154,8 +154,8 @@ function drawParticles() {
     if (pos.x >= 0 && pos.x < columns && pos.y >= 0 && pos.y < rows) {
       v = field[Math.floor(pos.x)][Math.floor(pos.y)];
     }
-    p.move(v);
-    p.wrap();
+    p.move(v); // move particle
+    p.wrap(); // reset particle if outside canvas
   });
 }
 setup();
